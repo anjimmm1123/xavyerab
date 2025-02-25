@@ -159,6 +159,21 @@ app.all('/player/*', function (req, res) {
     res.status(301).redirect('https://api.yoruakio.tech/player/' + req.path.slice(8));
 });
 
+// Pastikan error handling middleware ada di bagian bawah
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Terjadi kesalahan pada server!');
+});
+
+// Pastikan semua route handler memiliki error handling
+app.get('/contoh-route', async (req, res, next) => {
+    try {
+        // kode route handler
+    } catch (error) {
+        next(error);
+    }
+});
+
 // Start server
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
