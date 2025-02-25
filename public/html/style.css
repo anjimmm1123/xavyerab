@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", serif;
+    font-weight: 500;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background: url('https://s3.eu-west-1.amazonaws.com/cdn.growtopiagame.com/website/resources/assets/images/backgrounds/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    box-shadow: 
+        2px 2px 0 #134357, 
+        inset 2px 2px 0 #134357;
+    padding: 20px;
+    background-color: #1e8fb4b7;
+    border: 2px solid #b0eaff;
+    border-radius: 5px;
+    color: #FEE6BA;
+    width: 90%;
+    max-width: 400px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.title img {
+    width: 32px;
+    height: 32px;
+}
+
+.desk {
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.input {
+    all: unset;
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0 16px;
+    font-size: 16px;
+    background-color: #1d9bc5be;
+    border: 2px solid #28b9ee;
+    border-radius: 5px;
+    color: #fefefe;
+    box-shadow: 
+        2px 2px 0 #1343576e, 
+        inset 2px 2px 0 #13435777;
+    box-sizing: border-box;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #007BFF;
+    box-shadow: 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+.btn-wrapper {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    outline: none;
+    border: none;
+    font-size: 16px;
+    padding: 10px;
+    color: #fefefe;
+    flex: 1;
+    background: #e9a82f;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:not(:first-child) {
+    background: #28b9ee;
+}
+
+button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .title h1 {
+        font-size: 18px;
+    }
+
+    .desk {
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px;
+    }
+}

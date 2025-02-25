@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Dashboard</title>
+    <link rel="icon" type="image/png" href="https://s3.eu-west-1.amazonaws.com/cdn.growtopiagame.com/website/resources/assets/images/growtopia.ico" sizes="16x16">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="card">
+        <div class="title">
+            <img src="https://gtpshax.github.io/DialogGTPS/src/assets/items/32.png" alt="32">
+            <h1 style="color: #fefefe; font-weight: 700;">Welcome to <span id="server">Growtopia Private Server</span></h1>
+        </div>
+        <p class="desk">You are now entering the login page of this server. Please enter your <span style="color:#fefefe">GrowID</span> and <span style="color:#fefefe">Password</span> if you already have an account, or log in as a guest.</p>
+        
+        <form id="loginForm" method="post" action="/player/growid/login" style="margin-top: 10px;">
+            <label>
+                GrowID:
+                <input type="text" class="input" id="login-growid" name="growId" required>
+            </label>
+            <br>
+            <label>
+                <p>Password:</p>
+                <input type="password" class="input" id="login-password" name="password" required>
+            </label>
+            <div class="btn-wrapper">
+                <button type="button" onclick="showRegisterForm()">Register/Reset</button>
+                <button type="submit">Login</button>
+            </div>
+        </form>
+
+        <form id="registerForm" method="post" action="/player/growid/register" style="display: none; margin-top: 10px;">
+            <label>
+                GrowID:
+                <input type="text" class="input" id="register-growid" name="growId" required>
+            </label>
+            <br>
+            <label>
+                <p>Password:</p>
+                <input type="password" class="input" id="register-password" name="password" required>
+            </label>
+            <br>
+            <label>
+                <p>Confirm Password:</p>
+                <input type="password" class="input" id="confirm-password" required>
+            </label>
+            <div class="btn-wrapper">
+                <button type="button" onclick="showLoginForm()">Back to Login</button>
+                <button type="submit">Register</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function showRegisterForm() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+        }
+
+        function showLoginForm() {
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const growid = document.getElementById('login-growid').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                const response = await fetch('/player/growid/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ growid, password })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    localStorage.setItem('playerData', JSON.stringify(data.player));
+                    window.location.href = '/game';
+                } else {
+                    alert(data.error);
+                }
+            } catch (error) {
+                alert('Terjadi kesalahan, silakan coba lagi');
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const growid = document.getElementById('register-growid').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (password !== confirmPassword) {
+                alert('Password tidak cocok');
+                return;
+            }
+
+            try {
+                const response = await fetch('/player/growid/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ growid, password })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    alert(data.message);
+                    showLoginForm();
+                } else {
+                    alert(data.error);
+                }
+            } catch (error) {
+                alert('Terjadi kesalahan, silakan coba lagi');
+            }
+        });
+    </script>
+</body>
+</html>
